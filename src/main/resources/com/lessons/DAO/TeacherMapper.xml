@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lessons.DAO.TeacherMapper">
+    <select id="findAllAdjust" resultType="com.lessons.POJO.AdjustClass">
+        select * from adjust_class_info where teacher_account = #{teacher_account} order by id desc
+    </select>
+
+    <select id="findAllSupplement" resultType="com.lessons.POJO.SupplementClass">
+        select * from supplement_class_info where teacher_account = #{teacher_account} order by id desc
+    </select>
+
+    <insert id="insertAdjust" parameterType="AdjustClass">
+        INSERT INTO adjust_class_info
+        VALUES(DEFAULT,#{teacher_account},#{profession},#{grade},#{lesson},#{date},#{classroom},#{time},#{reason},DEFAULT,DEFAULT)
+    </insert>
+
+    <insert id="insertSupplement" parameterType="SupplementClass">
+        INSERT INTO supplement_class_info
+        VALUES(DEFAULT,#{teacher_account},#{profession},#{grade},#{lesson},#{date},#{classroom},#{time},DEFAULT,DEFAULT)
+    </insert>
+
+    <insert id="insertFeedback" parameterType="FeedbackTb">
+        INSERT INTO feedback_info
+        VALUES(DEFAULT,#{account},#{feedback},now())
+    </insert>
+
+    <update id="updatePassword" >
+        update teacher_info set teacher_password=#{passwordNew}
+        where teacher_account = #{account} and teacher_password = #{password}
+    </update>
+
+    <select id="findNoAdjust" resultType="com.lessons.POJO.AdjustClass">
+        select * from adjust_class_info where teacher_account = #{teacher_account} and notice = 0 and status = 1
+    </select>
+
+    <select id="findNoSupplement" resultType="com.lessons.POJO.SupplementClass">
+        select * from supplement_class_info where teacher_account = #{teacher_account} and notice = 0
+    </select>
+
+    <select id="findEmail" resultType="String">
+        select email from email_info where profession = #{profession} and grade = #{grade}
+    </select>
+
+    <update id="updateNotice">
+        update supplement_class_info set notice = 1
+        where id = #{id}
+    </update>
+
+    <update id="updateNoticeTwo">
+        update adjust_class_info set notice = 1
+        where id = #{id}
+    </update>
+</mapper>

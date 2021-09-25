@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lessons.DAO.LoginMapper">
+    <select id="findByAdmin" resultType="com.lessons.POJO.Admin">
+        select * from admin_info where account = #{account} and password = #{password}
+    </select>
+
+    <select id="findByTeacher" resultType="com.lessons.POJO.Teacher">
+        select * from teacher_info where teacher_account = #{account} and teacher_password = #{password}
+    </select>
+
+    <select id="findByLeadership" resultType="com.lessons.POJO.Leadership">
+        select * from leadership_info where leadership_account = #{account} and leadership_password = #{password}
+    </select>
+</mapper>

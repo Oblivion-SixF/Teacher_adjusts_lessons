@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lessons.DAO.LeadershipMapper">
+    <select id="findAllAdjust" parameterType="String" resultType="com.lessons.POJO.AdjustClass">
+        SELECT teacher_name,profession,grade,lesson,date,classroom,time
+        from teacher_info,adjust_class_info
+        where adjust_class_info.teacher_account
+        IN (SELECT teacher_account
+            from teacher_info
+            WHERE teacher_college = #{leadership_college}) and status != 0
+    </select>
+
+    <select id="findAllSupplement" parameterType="String" resultType="com.lessons.POJO.SupplementClass">
+        SELECT teacher_name,profession,grade,lesson,date,classroom,time
+        from teacher_info,supplement_class_info
+        where supplement_class_info.teacher_account
+        IN (SELECT teacher_account
+            from teacher_info
+            WHERE teacher_college = #{leadership_college}) and status != 0
+    </select>
+
+    <select id="findAno" parameterType="String" resultType="com.lessons.POJO.AdjustClass">
+        SELECT id,teacher_name,profession,grade,lesson,date,classroom,time,reason
+        from teacher_info,adjust_class_info
+        where adjust_class_info.teacher_account
+        IN (SELECT teacher_account
+            from teacher_info
+            WHERE teacher_college = #{leadership_college}) and status = 0
+    </select>
+
+    <select id="findSno" parameterType="String" resultType="com.lessons.POJO.SupplementClass">
+        SELECT id,teacher_name,profession,grade,lesson,date,classroom,time
+        from teacher_info,supplement_class_info
+        where supplement_class_info.teacher_account
+        IN (SELECT teacher_account
+            from teacher_info
+            WHERE teacher_college = #{leadership_college}) and status = 0 and notice = 1
+    </select>
+
+    <update id="updateStatusNo" parameterType="int">
+        update adjust_class_info set status=2
+        where id=#{id}
+    </update>
+
+    <update id="updateStatusYes" parameterType="int">
+        update adjust_class_info set status=1
+        where id=#{id}
+    </update>
+
+    <update id="updateStatusZMYes" parameterType="int">
+        update Supplement_class_info set status=1
+        where id=#{id}
+    </update>
+
+    <insert id="insertFeedback" parameterType="FeedbackTb">
+        INSERT INTO feedback_info
+        VALUES(DEFAULT,#{account},#{feedback},now())
+    </insert>
+
+    <update id="updatePassword">
+        update leadership_info set leadership_password=#{passwordNew}
+        where leadership_account = #{account} and leadership_password = #{password}
+    </update>
+</mapper>
