@@ -23,14 +23,14 @@ public class EmailSender {
 
         Session session = Session.getDefaultInstance(prop, new Authenticator() {
             public PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("1023970167@qq.com", "hmzjhoixuztpbgab");
+                return new PasswordAuthentication("1023970167@qq.com", "pbb");
             }
         });
 
         session.setDebug(true);
 
         Transport ts = session.getTransport();
-        ts.connect("smtp.qq.com", "1023970167@qq.com", "hmzjhoixuztpbgab");
+        ts.connect("smtp.qq.com", "1023970167@qq.com", "gab");
         MimeMessage message = new MimeMessage(session);
         message.setFrom(new InternetAddress("1023970167@qq.com"));
         message.setRecipient(Message.RecipientType.TO, new InternetAddress(email_to));
